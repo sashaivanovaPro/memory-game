@@ -1,0 +1,239 @@
+:root {
+  --color-bg: #f4f1ea;
+  --color-surface: #ffffff;
+  --color-text: #1f2430;
+  --color-muted: #5c6475;
+  --color-accent: #3b5bdb;
+  --color-accent-hover: #2f4ac0;
+  --color-card-back: #3b5bdb;
+  --color-matched: #2f9e44;
+  --color-backdrop: rgb(15 18 25 / 60%);
+
+  --radius: 12px;
+  --gap: 12px;
+  --flip-duration: 0.4s;
+
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+}
+
+.scroll-lock {
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap);
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px 16px 8px;
+}
+
+.header__title {
+  margin: 0;
+  font-size: 28px;
+}
+
+.header__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.header__button,
+.modal__button,
+.modal__close {
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 8px;
+  color: #ffffff;
+  background-color: var(--color-accent);
+}
+
+.header__button:hover,
+.modal__button:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.stats {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+  color: var(--color-muted);
+}
+
+.stats__item {
+  margin: 0;
+}
+
+.stats__value {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* Board */
+
+.page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+.card {
+  position: relative;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  transform-style: preserve-3d;
+  transition: transform var(--flip-duration);
+}
+
+.card--open {
+  transform: rotateY(180deg);
+}
+
+.card:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.card__back,
+.card__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  backface-visibility: hidden;
+}
+
+.card__back {
+  background-color: var(--color-card-back);
+  background-image: url("../images/flowers.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.card__face {
+  font-size: clamp(28px, 9vw, 56px);
+  background-color: var(--color-surface);
+  box-shadow: inset 0 0 0 2px var(--color-accent);
+  transform: rotateY(180deg);
+}
+
+.card--matched {
+  cursor: default;
+}
+
+.card--matched .card__face {
+  box-shadow: inset 0 0 0 3px var(--color-matched);
+}
+
+/* Modal */
+
+.modal {
+  width: min(420px, calc(100% - 32px));
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+}
+
+.modal::backdrop {
+  background-color: var(--color-backdrop);
+}
+
+.modal__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.modal__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.modal__title {
+  margin: 0;
+}
+
+.modal__text {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.modal__close {
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard th,
+.leaderboard td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--color-bg);
+}
+
+@media (max-width: 400px) {
+  :root {
+    --gap: 8px;
+  }
+
+  .header__title {
+    font-size: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}
